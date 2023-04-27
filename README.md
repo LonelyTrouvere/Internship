@@ -13,3 +13,10 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+### DOCKER
+### `docker build .`
+Builds the docker image. To name image use `-t [NAME_STRING]` 
+
+### `docker run --name [CONTAINER_NAME] -p [PORT] [IMAGE_NAME]`
+Builds and executes container.
