@@ -1,41 +1,38 @@
 import "../Styles/Form.css"
+import Input from '../Components/Input'
+import Data from '../Types/FormData'
+import {useState, useEffect} from 'react'
 
 const Form = ( props:
     {type: string}
 ) => {
+
+    const [data, setData] = useState<Data>({
+        mail: "",
+        pass: "", 
+    });
+
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setData({
+            ...data, 
+            [e.target.name]: e.target.value,
+        });
+    };
+
     return (
         <form className="input-form">
             <h3>Welcome</h3>
             {
                 props.type === "signup" &&
             <>
-            <div className="inp">
-            <label htmlFor="fname">First Name</label>
-            <input type="input" name="fname"/>
-            </div>
-            <div className="inp">
-            <label htmlFor="sname">Second Name</label>
-            <input type="input" name="sname"/>
-            </div>
-            <div className="inp">
-            <label htmlFor="city">City</label>
-            <input type="input" name="city"/>
-            </div>
-            <div className="inp">
-            <label htmlFor="phone">Phone Number</label>
-            <input type="input" name="phone"/>
-            </div>
+            <Input inputName="fname" type="input" lab="First Name" handleChange={handleChange}/>
+            <Input inputName="sname" type="input" lab="Second Name" handleChange={handleChange}/>
+            <Input inputName="city" type="input" lab="City" handleChange={handleChange}/>
+            <Input inputName="phone" type="input" lab="Phone Number" handleChange={handleChange}/>
             </>
             }
-
-            <div className="inp">
-            <label htmlFor="email">E-mail</label>
-            <input type="input" name="email"/>
-            </div>
-            <div className="inp">
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password"/>
-            </div>
+            <Input inputName="mail" type="input" lab="E-mail" handleChange={handleChange}/>
+            <Input inputName="pass" type="password" lab="Password" handleChange={handleChange}/>
             <div className="inp">
             <button disabled>Submit</button>
             </div>
