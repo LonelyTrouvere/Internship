@@ -1,0 +1,20 @@
+.input-form{
+    margin-left: 33%;
+    margin-top: 2em;
+    width: 33%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 3px rgb(56, 59, 81) solid;
+}
+
+h3{
+    align-self: center;
+}
+
+.inp{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
