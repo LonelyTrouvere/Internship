@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import {DefaultState} from '../test'
+import {DefaultState, crateIncrementAction, crateDecrementAction} from '../test'
 
 const TestPage = () =>{
     const value:number = useSelector<DefaultState, number>(state => state.value);
     const dispatch = useDispatch();
 
-    const Add = () => dispatch({type:"INCREMENT"})
-    const Sub = () => dispatch({type:"DECREMENT"})
+    const Add = () => dispatch(crateIncrementAction());
+    const Sub = () => dispatch(crateDecrementAction());
 
     return (
         <div className="container">
