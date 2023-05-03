@@ -5,8 +5,8 @@ import MyAction, {STATUS_CHECK} from './actionType'
 
 export const fetchStatus = () =>{
   return async (dispatch: Dispatch<MyAction>) => {
-        const res = await axios.get('http://3.75.186.163/');
-
-        dispatch({type: STATUS_CHECK, payload: res.data});
+        const res = await apiStatus()
+        console.log(res);
+        dispatch({type: STATUS_CHECK, payload: {status_code: res.status_code, detail: res.detail, result: res.result}});
     }
 }

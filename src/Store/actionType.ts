@@ -2,6 +2,7 @@ export const STATUS_CHECK = "STATUS_CHECK";
 
 export type Status = {
     status_code: number,
+    detail: string,
     result: string,
 };
 
