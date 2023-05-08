@@ -4,6 +4,10 @@ import ErrorBox from '../Components/ErrorBox'
 import Data from '../Types/FormData'
 import { createUser } from "../Api/apiDialog"
 import {useState} from 'react'
+import { isAxiosError } from "axios"
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "../Store/typedDispatch"
+import { authorize } from "../Store/asyncMetods"
 
 const Form = ( props:
     {type: string}
@@ -17,6 +21,9 @@ const Form = ( props:
     });
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    const redirect = useNavigate();
+    const dispatch = useDispatch();
+
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setErrorMessage("");
         setData({ 
@@ -25,42 +32,81 @@ const Form = ( props:
         });
     };
 
-    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
-        e.preventDefault();
+    const validation = (e:React.FormEvent<HTMLFormElement>) => {
         if (!data.email || !data.pass){
             setErrorMessage("Some fields are empty")
+            return false;
         }
-        else
-        if (props.type === "signup" && (!data.firstName || !data.lastName || !data.repPass || !data.city || !data.phone)){
+        if (props.type === "signup" && (!data.firstName || !data.lastName || !data.repPass)){
             setErrorMessage("Some fields are empty")
+            return false;
         }
-        else
         if (!EMAIL_REGEXP.test(data.email))
         {
             setErrorMessage("Invalid E-mail");
+            return false;
         }
-        else
         if (props.type === "signup" && data.pass !== data.repPass){
             setErrorMessage("Passwords don't match");
+            return false;
         }
-        else
+        return true;
+    }
+
+    const handleSignin = async (e:React.FormEvent<HTMLFormElement>) =>{
+        e.preventDefault();
+        if (validation(e))
         {
+            try{
             const res = await createUser(data);
+            redirect("/loginredirect");
+            }
+            catch (e:unknown){
+                if (isAxiosError(e))
+                    {
+                        setErrorMessage(e.response?.data.detail);
+                    }
+            }
         }
     }
+
+    const handleLogin = async (e:React.FormEvent<HTMLFormElement>) =>{
+        e.preventDefault();
+        if (validation(e))
+        {
+            try{
+            await dispatch(authorize(data));
+            }
+            catch (e:unknown)
+            {
+                if (isAxiosError(e))
+                {
+                    setErrorMessage(e.response?.data.detail);
+                }
+            }
+        }
+    }
+
+    const signupMessage = <div className="underForm">
+        <p>Already have an account?</p>
+        <p>Log in <Link to="/login">here</Link>!</p>
+    </div>
+
+    const loginMessage = <div className="underForm">
+    <p>Don't have an account?</p>
+    <p>Sign up <Link to="/signup">here</Link>!</p>
+    </div>
 
     return (
         <>
         {errorMessage && <ErrorBox message={errorMessage}/>}
-        <form className="input-form" onSubmit={handleSubmit}>
+        <form className="input-form" onSubmit={props.type === "signup"? handleSignin: handleLogin}>
             <h3>Welcome</h3>
             {
                 props.type === "signup" &&
             <>
             <Input inputName="firstName" type="input" lab="First Name" handleChange={handleChange}/>
             <Input inputName="lastName" type="input" lab="Second Name" handleChange={handleChange}/>
-            <Input inputName="city" type="input" lab="City" handleChange={handleChange}/>
-            <Input inputName="phone" type="input" lab="Phone Number" handleChange={handleChange}/>
             </>
             }
             <Input inputName="email" type="input" lab="E-mail" handleChange={handleChange}/>
@@ -70,8 +116,9 @@ const Form = ( props:
             <Input inputName="repPass" type="password" lab="Repeat password" handleChange={handleChange}/>
             }
             <div className="inp">
-            <button>Submit</button>
+            <button>{props.type === "signup"? "Sign up": "Log in"}</button>
             </div>
+            {props.type==="signup"? signupMessage:loginMessage}
         </form>
         </>
     );

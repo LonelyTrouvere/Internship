@@ -1,4 +1,4 @@
-import MyAction, {STATUS_CHECK} from "./actionType";
+import MyAction, {STATUS_CHECK} from "../Types/actionType";
 
 export type DefaultState = {
     status_code:number,
@@ -12,7 +12,7 @@ const defaultState:DefaultState = {
     result: "",
 }
 
-export const reducer = (state: DefaultState = defaultState, action:MyAction):DefaultState => {
+export const statusReducer = (state: DefaultState = defaultState, action:MyAction):DefaultState => {
     switch (action.type){
         case STATUS_CHECK:
             return {...state, status_code: action.payload.status_code, detail: action.payload.detail, result: action.payload.result};
