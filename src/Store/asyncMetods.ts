@@ -1,6 +1,5 @@
 import { Dispatch } from "redux";
-import { apiStatus } from "../Api/statusCheck";
-import axios from "axios";
+import { apiStatus } from "../Api/apiDialog";
 import MyAction, {STATUS_CHECK} from './actionType'
 
 export const fetchStatus = () =>{

@@ -1,0 +1,10 @@
+.errorBox{
+    gap: 5px;
+    margin-left: 33%;
+    margin-bottom: 0px;
+    width: 33%;
+    height: 30px;
+    padding-left: 10px;
+    background-color: rgba(253, 66, 66, 0.515);
+    border: 3px solid red;
+}

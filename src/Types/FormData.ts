@@ -1,10 +1,11 @@
 type Data = {
-    fname?: string,
-    sname?: string,
+    firstName?: string,
+    lastName?: string,
     city?: string, 
     phone?: string,
-    mail: string,
+    email: string,
     pass: string,
+    repPass?: string,
 };
 
 export default Data;

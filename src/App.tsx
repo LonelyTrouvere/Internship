@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import Main from './Pages/MainPage'
 import Form from './Pages/Form'
 import List from './Pages/List'

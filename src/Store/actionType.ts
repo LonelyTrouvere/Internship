@@ -1,10 +1,6 @@
-export const STATUS_CHECK = "STATUS_CHECK";
+import {Status} from'./stateType'
 
-export type Status = {
-    status_code: number,
-    detail: string,
-    result: string,
-};
+export const STATUS_CHECK = "STATUS_CHECK";
 
 type StatusCheckAction = {
     type: typeof STATUS_CHECK,
