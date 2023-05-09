@@ -5,9 +5,17 @@ import About from './Pages/About'
 import LoginRedirect from './Pages/LognRedirect'
 import Navbar from './Components/Navbar'
 import {Routes, Route} from 'react-router-dom'
+import { continueSesion } from './Store/asyncMetods'
+import { useDispatch } from './Store/typedDispatch'
 import './App.css'
 
 function App() {
+
+  const token = localStorage.getItem('access_token');
+  const dispatch = useDispatch();
+  if (token){
+    dispatch(continueSesion(token));
+  }
 
   return (
     <>

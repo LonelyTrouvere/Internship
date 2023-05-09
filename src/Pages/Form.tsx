@@ -3,7 +3,7 @@ import Input from '../Components/Input'
 import ErrorBox from '../Components/ErrorBox'
 import Data from '../Types/FormData'
 import { createUser } from "../Api/apiDialog"
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import { isAxiosError } from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "../Store/typedDispatch"
@@ -24,8 +24,7 @@ const Form = ( props:
 
     const redirect = useNavigate();
     const dispatch = useDispatch();
-    const { loginWithRedirect } = useAuth0();
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setErrorMessage("");
@@ -93,8 +92,8 @@ const Form = ( props:
     const handleAuth0 = async (e:React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         try{
-            loginWithRedirect();
-            dispatch(authorizeWithAuth0((await getAccessTokenSilently()).toString()));
+            const res = await getAccessTokenSilently();
+            dispatch(authorizeWithAuth0(res));
         }
         catch(e:unknown){
         setErrorMessage("Authentication failed");
