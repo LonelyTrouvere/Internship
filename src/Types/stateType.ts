@@ -1,12 +1,12 @@
 export type User = {
-    id: number,
-    email: string,
-    firstName?: string,
-    lastName?: string,
-    avatar?: string,  
-    status?:string,  
-    phone?: string,
-    city?: string,
+    user_id: number,
+    user_email: string,
+    user_firstname?: string,
+    user_lastname?: string,
+    user_avatar?: string,  
+    user_status?:string,  
+    user_phone?: string,
+    user_city?: string,
 }
 
 export type Status = {

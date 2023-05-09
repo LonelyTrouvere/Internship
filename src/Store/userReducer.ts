@@ -2,8 +2,8 @@ import {User} from '../Types/stateType'
 import Action, {AUTHORIZE} from '../Types/actionType'
 
 const defaultState:User = {
-    id:0,
-    email:"",
+    user_id:0,
+    user_email:"",
 }
 
 export const userReducer = (state:User = defaultState, action:Action) => {

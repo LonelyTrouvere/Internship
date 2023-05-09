@@ -3,11 +3,12 @@ import Input from '../Components/Input'
 import ErrorBox from '../Components/ErrorBox'
 import Data from '../Types/FormData'
 import { createUser } from "../Api/apiDialog"
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { isAxiosError } from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "../Store/typedDispatch"
-import { authorize } from "../Store/asyncMetods"
+import { authorize, authorizeWithAuth0 } from "../Store/asyncMetods"
+import { useAuth0 } from "@auth0/auth0-react"
 
 const Form = ( props:
     {type: string}
@@ -23,6 +24,8 @@ const Form = ( props:
 
     const redirect = useNavigate();
     const dispatch = useDispatch();
+    const { loginWithRedirect } = useAuth0();
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setErrorMessage("");
@@ -87,6 +90,17 @@ const Form = ( props:
         }
     }
 
+    const handleAuth0 = async (e:React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        try{
+            loginWithRedirect();
+            dispatch(authorizeWithAuth0((await getAccessTokenSilently()).toString()));
+        }
+        catch(e:unknown){
+        setErrorMessage("Authentication failed");
+        }
+    }
+
     const signupMessage = <div className="underForm">
         <p>Already have an account?</p>
         <p>Log in <Link to="/login">here</Link>!</p>
@@ -115,9 +129,8 @@ const Form = ( props:
             props.type === "signup" &&
             <Input inputName="repPass" type="password" lab="Repeat password" handleChange={handleChange}/>
             }
-            <div className="inp">
-            <button>{props.type === "signup"? "Sign up": "Log in"}</button>
-            </div>
+            <input type='submit' value={props.type === "signup"? "Sign up": "Log in"}></input>
+            <button type="button" onClick={handleAuth0}>Auth0</button>
             {props.type==="signup"? signupMessage:loginMessage}
         </form>
         </>
