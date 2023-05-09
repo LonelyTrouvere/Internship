@@ -15,7 +15,7 @@ export const authorize = (user:FormUser) => {
     const res = await authUser(user).then(response => response.result.access_token);
     const authme = await authMe(res);
     localStorage.setItem('access_token', res);
-    dispatch({type: AUTHORIZE, payload:authme.result});
+    dispatch({type: AUTHORIZE, payload:{...authme, access_token:res}});
   }
 }
 
@@ -23,13 +23,13 @@ export const authorizeWithAuth0 = (token: string) => {
   return async (dispatch: Dispatch<Action>) => {
     const res = await authMe(token);
     localStorage.setItem('access_token', token);
-    dispatch({type: AUTHORIZE, payload: res.result});
+    dispatch({type: AUTHORIZE, payload: {...res.result, access_token:token}});
   }
 }
 
 export const continueSesion = (token:string) => {
   return async (dispatch: Dispatch<Action>) =>{
     const res = await authMe(token);
-    dispatch({type: AUTHORIZE, payload: res.result});
+    dispatch({type: AUTHORIZE, payload: {...res.result, access_token:token}});
   }
 }

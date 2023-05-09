@@ -1,9 +1,22 @@
 import {Link} from 'react-router-dom'
 import '../Styles/Navbar.css'
+import { useSelector } from 'react-redux';
+import { RootState } from '../Store/store';
+import { useDispatch } from '../Store/typedDispatch';
+import { LOGOUT } from '../Types/actionType';
+import { useEffect } from 'react';
 
 const Navbar = () =>
 {
-    const token = localStorage.getItem('access_token');
+    const dispatch = useDispatch();
+    const token = useSelector((state:RootState) => state.user.access_token);
+    const userName = useSelector((state:RootState) => state.user.user_firstname+' '+state.user.user_lastname);
+    const email = useSelector((state:RootState) => state.user.user_email);
+    const handleLogout = () =>{
+        localStorage.removeItem('access_token');
+        dispatch({type:LOGOUT});
+    }
+
     return (
     <nav>
         <div>
@@ -13,8 +26,23 @@ const Navbar = () =>
         <Link to="/about"><button className='about buttons'>About</button></Link>
         </div>
         <div className='forms'>
-        <Link to="/login"><button className='login buttons'>Log in</button></Link>
-        <Link to="/signup"><button className='signup buttons'>Sign up</button></Link>
+        {
+            token === null &&
+        <>
+            <Link to="/login"><button className='login buttons'>Log in</button></Link>
+            <Link to="/signup"><button className='signup buttons'>Sign up</button></Link>
+        </>
+        }
+        {
+            token !==null &&
+            <>
+            <div className='user-info'>
+                <p>{userName}</p>
+                <p>{email}</p>
+            </div>
+            <button className='login buttons' onClick={handleLogout}>Log out</button>
+            </>
+        }
         </div>
     </nav>
     );

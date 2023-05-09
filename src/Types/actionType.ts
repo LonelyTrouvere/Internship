@@ -2,7 +2,7 @@ import {Status} from'./stateType'
 import {User} from './stateType'
 
 export const STATUS_CHECK = "STATUS_CHECK";
-
+export const LOGOUT = "LOGOUT"
 export const AUTHORIZE = "AUTHORIZE";
 
 type AuthorizeAction = {
@@ -10,7 +10,12 @@ type AuthorizeAction = {
     payload: User,
 }
 
-type UserAction = AuthorizeAction; //Posibilities for expanding
+type LogOutAction = {
+    type: typeof LOGOUT,
+    payload?:User,
+}
+
+type UserAction = AuthorizeAction | LogOutAction; //Posibilities for expanding
 
 type StatusCheckAction = {
     type: typeof STATUS_CHECK,
