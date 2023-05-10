@@ -1,7 +1,6 @@
-import {Routes, Route, Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from '../Store/typedDispatch';
-import {DefaultState} from '../Store/reducer';
+import { RootState } from '../Store/store';
 import { fetchStatus } from '../Store/asyncMetods';
 import { useEffect } from 'react';
 
@@ -9,12 +8,12 @@ import { useEffect } from 'react';
 const Main = () => {
 
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         dispatch(fetchStatus());
       }, [dispatch]);
 
-    const [code, detail, status] = useSelector((state:DefaultState) => {return [state.status_code, state.detail, state.result]});
+    const [code, detail, status] = useSelector((state:RootState) => {return [state.status.status_code, state.status.detail, state.status.result]});
 
     return (
     <>

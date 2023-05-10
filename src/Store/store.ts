@@ -1,7 +1,16 @@
-import {createStore, applyMiddleware} from 'redux'
-import {reducer} from './reducer'
+import {createStore, combineReducers, applyMiddleware} from 'redux'
+import {statusReducer} from './statusReducer'
+import { userReducer, tokenReducer } from './userReducer';
 import thunkMiddleware from 'redux-thunk';
 
-const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+const rootReducer = combineReducers({
+    user: userReducer,
+    token: tokenReducer,
+    status: statusReducer,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 export default store;
