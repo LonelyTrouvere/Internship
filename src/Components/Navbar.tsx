@@ -4,14 +4,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Store/store';
 import { useDispatch } from '../Store/typedDispatch';
 import { DELETE_TOKEN, LOGOUT } from '../Types/actionType';
-import { useEffect } from 'react';
 
 const Navbar = () =>
 {
     const dispatch = useDispatch();
     const token = useSelector((state:RootState) => state.token.access_token);
-    const userName = useSelector((state:RootState) => state.user.user_firstname+' '+state.user.user_lastname);
-    const email = useSelector((state:RootState) => state.user.user_email);
+    const userName = useSelector((state:RootState) => state.user['user_firstname']+' '+state.user['user_lastname']);
+    const email = useSelector((state:RootState) => state.user['user_email']);
     const handleLogout = () =>{
         localStorage.removeItem('access_token');
         dispatch({type:LOGOUT});
