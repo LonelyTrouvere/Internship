@@ -1,18 +1,32 @@
-import {User} from '../Types/stateType'
-import Action, {AUTHORIZE, LOGOUT} from '../Types/actionType'
+import {User, AccessToken} from '../Types/stateType'
+import Action, {AUTHORIZE, DELETE_TOKEN, LOGOUT, SET_TOKEN} from '../Types/actionType'
 
-const defaultState:User = {
+const defaultUser:User = {
     user_id:0,
     user_email:"",
-    access_token:null,
 }
 
-export const userReducer = (state:User = defaultState, action:Action) => {
+const defaultToken:AccessToken = {
+    access_token: null,
+}
+
+export const userReducer = (state:User = defaultUser, action:Action) => {
     switch (action.type){
         case AUTHORIZE:
-            return {...action.payload, access_token:action.payload.access_token};
+            return {...action.payload};
         case LOGOUT:
-            return defaultState;
+            return defaultUser;
+        default:
+            return state;
+    }
+}
+
+export const tokenReducer = (state:AccessToken = defaultToken, action:Action) =>{
+    switch (action.type){
+        case SET_TOKEN:
+            return action.payload;
+        case DELETE_TOKEN:
+            return defaultToken;
         default:
             return state;
     }

@@ -16,11 +16,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Auth0Provider
-      domain='dev-j5yx0w-e.us.auth0.com'
-      clientId='tMBIoDwuV0rP5JmdInvqrcZEs2Tu5Glt'
+      domain={process.env.REACT_APP_AUTH0_DOMAIN as string}
+      clientId={process.env.REACT_APP_AUTH0_CLIENTID as string}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: "https://internship-example.com"
+        audience: process.env.REACT_APP_AUTH0_AUDIENCE as string
       }}>
         <BrowserRouter>
          <App />

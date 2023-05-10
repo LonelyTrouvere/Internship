@@ -12,18 +12,16 @@ import PrivateRoute from './Components/PrivateRoute'
 import {RootState} from './Store/store'
 import './App.css'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 function App() {
 
   const token_start = localStorage.getItem('access_token');
   const dispatch = useDispatch();
   if (token_start){
-    dispatch(continueSesion(token_start));
+    dispatch(continueSesion());
   }
 
-  const token = useSelector((state:RootState) => state.user.access_token);
-  
+  const token = useSelector((state:RootState) => state.token.access_token);
   return (
     <>
     <Navbar />

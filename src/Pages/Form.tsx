@@ -93,7 +93,8 @@ const Form = ( props:
         e.preventDefault();
         try{
             const res = await getAccessTokenSilently();
-            dispatch(authorizeWithAuth0(res));
+            localStorage.setItem('access_token', res);
+            dispatch(authorizeWithAuth0());
         }
         catch(e:unknown){
         setErrorMessage("Authentication failed");

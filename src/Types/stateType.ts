@@ -7,7 +7,10 @@ export type User = {
     user_status?:string,  
     user_phone?: string,
     user_city?: string,
-    access_token:string | null,
+}
+
+export type AccessToken = {
+    access_token: string | null,
 }
 
 export type Status = {
