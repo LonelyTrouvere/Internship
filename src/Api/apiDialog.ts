@@ -47,3 +47,8 @@ export const authMe = async () => {
     const res = await client.get("auth/me").then(response => response.data);
     return res;
 }
+
+export const getAllUsers = async (page:number, entrie: number) => {
+    const res = await client.get("users", {params:{page:page, page_size:entrie}}).then(response => response.data.result);
+    return res;
+}

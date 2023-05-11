@@ -13,6 +13,11 @@ export type AccessToken = {
     access_token: string | null,
 }
 
+export type UserList = {
+    users: Array<User>,
+    total_page:number,
+}
+
 export type Status = {
     status_code: number,
     detail: string,

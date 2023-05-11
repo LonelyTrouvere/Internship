@@ -1,17 +1,18 @@
-import {useState} from 'react'
-import Table from '../Components/Table'
+import {useEffect, useState} from 'react'
+import Paganation from '../Components/Paganation'
 
 const List = () => {
     const [selected, setSelected] = useState('User');
+
     return(
         <>
         <form className="controlPanel">
             <select onChange={(e) => setSelected(e.target.value)} name="veiw">
-                <option id='1' selected>User</option>
+                <option id='1'>User</option>
                 <option id='2'>Company</option>
             </select>
         </form>
-        <Table view={selected}/>
+        <Paganation view={selected}/>
         </>
     );
 }
