@@ -19,6 +19,7 @@ const Paganation = (props:
 
     const changeEntries = (e:React.ChangeEvent<HTMLSelectElement>) =>{
         const num = (e.target.value as unknown) as number;
+        setPageNumber(1);
         setEntries(num);
     }
 
