@@ -14,9 +14,9 @@ const Profile = (props: {
     const avatar = user.user_avatar === null? defaultAvatar : user.user_avatar;
 
     return (
-        <div className="profile">
+        <div className="profile-card">
             <div className="avatar-holder">
-                <img src={avatar} alt='avatar' className="user-avatar"/>
+                <img src={avatar} alt='avatar' className="user-avatar" width='250px' height='auto'/>
             </div>
             <div className="user">
                 <p className="profile-name user-p">Name <br/>{user.user_firstname} {user.user_lastname}</p>
