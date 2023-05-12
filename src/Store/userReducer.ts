@@ -1,12 +1,13 @@
-import {User, AccessToken, UserList} from '../Types/stateType'
-import Action, {AUTHORIZE, DELETE_TOKEN, LOGOUT, SET_LIST, SET_TOKEN} from '../Types/actionType'
+import {User, AccessToken, OtherUsers} from '../Types/stateType'
+import Action, {AUTHORIZE, DELETE_TOKEN, LOGOUT, SET_LIST, SET_TOKEN, SET_VISITED_USER} from '../Types/actionType'
 
 const defaultUser:{user: User|null} = {
     user: null,
 }
 
-const userList:UserList = {
+const userList:OtherUsers = {
     users:[],
+    user_visit: null,
     total_page: 0,
 };
 
@@ -25,10 +26,12 @@ export const userReducer = (state:{user: User|null} = defaultUser, action:Action
     }
 }
 
-export const listReducer = (state:UserList = userList, action:Action) => {
+export const listReducer = (state:OtherUsers = userList, action:Action) => {
     switch (action.type){
         case SET_LIST:
-            return {users: action.payload.users, total_page: action.payload.total_page};
+            return {...state, users: action.payload.users, total_page: action.payload.total_page};
+        case SET_VISITED_USER:
+                return {...state, user_visit: action.payload}; 
         default:
             return state;
     }

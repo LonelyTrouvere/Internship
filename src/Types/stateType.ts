@@ -13,8 +13,9 @@ export type AccessToken = {
     access_token: string | null,
 }
 
-export type UserList = {
+export type OtherUsers = {
     users: Array<User>,
+    user_visit: User | null,
     total_page:number,
 }
 

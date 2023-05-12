@@ -52,3 +52,8 @@ export const getAllUsers = async (page:number, entrie: number) => {
     const res = await client.get("users", {params:{page:page, page_size:entrie}}).then(response => response.data.result);
     return res;
 }
+
+export const getUserByID = async (id:number) => {
+    const res = await client.get(`/user/${id}`).then(response => response.data.result);
+    return res;
+}

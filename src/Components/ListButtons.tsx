@@ -18,7 +18,7 @@ const ListButtons = (props:{
     return (
         <div className='pag-buttons'>
         {
-            buttonNumber.map((i) => (<button onClick={()=>props.setPageNumber(i)}>{i}</button>))
+            buttonNumber.map((i) => (<button key={i} onClick={()=>props.setPageNumber(i)}>{i}</button>))
         }
         </div>
     );

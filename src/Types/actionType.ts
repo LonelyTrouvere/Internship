@@ -1,4 +1,4 @@
-import {Status, UserList} from'./stateType'
+import {Status, OtherUsers} from'./stateType'
 import {User, AccessToken} from './stateType'
 
 export const STATUS_CHECK = "STATUS_CHECK";
@@ -7,6 +7,7 @@ export const SET_TOKEN = "SET_TOKEN";
 export const DELETE_TOKEN = "DELETE_TOKEN";
 export const AUTHORIZE = "AUTHORIZE";
 export const SET_LIST = "SET_LIST";
+export const SET_VISITED_USER = "SET_VISITED_USER";
 
 type AuthorizeAction = {
     type: typeof AUTHORIZE,
@@ -32,14 +33,21 @@ type UserAction = AuthorizeAction | LogOutAction | SetTokenAction | DeleteTokenA
 
 type UserListAction = {
     type: typeof SET_LIST;
-    payload: UserList;
+    payload: OtherUsers;
 }
+
+type VisitedUserAction = {
+    type: typeof SET_VISITED_USER;
+    payload: User;
+}
+
+type OtherUsersAction = UserListAction | VisitedUserAction;
 
 type StatusCheckAction = {
     type: typeof STATUS_CHECK,
     payload: Status,
 }
 
-type Action = StatusCheckAction | UserAction | UserListAction;
+type Action = StatusCheckAction | UserAction | OtherUsersAction;
 
 export default Action;

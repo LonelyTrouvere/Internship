@@ -2,10 +2,11 @@ import * as ReactBootStrap from 'react-bootstrap'
 import ListButtons from './ListButtons'
 import { useEffect, useState } from 'react';
 import { useDispatch } from '../Store/typedDispatch';
-import { allUsers } from '../Store/asyncMetods';
+import { allUsers, visitedUser } from '../Store/asyncMetods';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Store/store';
 import { User } from '../Types/stateType';
+import { useNavigate } from 'react-router-dom';
 
 const Paganation = (props:
     {view: string}
@@ -13,6 +14,7 @@ const Paganation = (props:
 
   const [pageNumber, setPageNumber] = useState(1);
     const [entrie, setEntries] = useState(10);
+  const redirect = useNavigate();
 
     const onNext = () => {if (pageNumber < 40) setPageNumber(pageNumber+1);}
     const onPrevious = () => {if (pageNumber > 1) setPageNumber(pageNumber-1);}
@@ -27,6 +29,17 @@ const Paganation = (props:
     useEffect(()=>{dispatch(allUsers(pageNumber, entrie));}, [pageNumber, entrie]);
    
     const users = useSelector((state:RootState) => state.list.users);
+    const registered = useSelector((state:RootState) => state.user['user_id']);
+
+    const usersProfile = async (id:number) =>{
+      if (id === registered)
+      redirect('/profile');
+      else
+      {
+      await dispatch(visitedUser(id));
+      redirect('/user');
+      }
+    }
 
     return(
       <>
@@ -43,8 +56,8 @@ const Paganation = (props:
       <tbody>
         {
           users.map((item:User) => {return (
-            <tr>
-              <th>{item.user_id}</th>
+            <tr key={item.user_id}>
+              <th><a href="#" onClick={()=>usersProfile(item.user_id)}>{item.user_id}</a></th>
               <th>{item.user_firstname} {item.user_lastname}</th>
               <th>{item.user_city}</th>
               <th>{item.user_phone}</th>

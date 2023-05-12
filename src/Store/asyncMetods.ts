@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { apiStatus, authUser, authMe, getAllUsers } from "../Api/apiDialog";
+import { apiStatus, authUser, authMe, getAllUsers, getUserByID } from "../Api/apiDialog";
 import FormUser from '../Types/FormData'
-import Action, {STATUS_CHECK, AUTHORIZE, SET_TOKEN, SET_LIST} from '../Types/actionType'
+import Action, {STATUS_CHECK, AUTHORIZE, SET_TOKEN, SET_LIST, SET_VISITED_USER} from '../Types/actionType'
 
 export const fetchStatus = () =>{
   return async (dispatch: Dispatch<Action>) => {
@@ -41,6 +41,13 @@ export const continueSesion = () => {
 export const allUsers = (page:number, entrie:number) => {
   return async (dispatch: Dispatch<Action>) => {
     const res = await getAllUsers(page, entrie);
-    dispatch({type: SET_LIST, payload: {users: res.users, total_page: res.pagination.total_page}});
+    dispatch({type: SET_LIST, payload: {users: res.users, total_page: res.pagination.total_page, user_visit:null}});
+  }
+}
+
+export const visitedUser = (id:number) => {
+  return async (dispatch:Dispatch<Action>)=>{
+    const res = await getUserByID(id);
+    dispatch({type: SET_VISITED_USER, payload: res});
   }
 }
