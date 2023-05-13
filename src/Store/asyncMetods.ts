@@ -1,7 +1,10 @@
 import { Dispatch } from "redux";
-import { apiStatus, authUser, authMe, getAllUsers, getUserByID } from "../Api/apiDialog";
+import { apiStatus, authUser, authMe, getAllUsers, getUserByID, updateUser, updatePassword, deleteUser } from "../Api/apiDialog";
 import FormUser from '../Types/FormData'
-import Action, {STATUS_CHECK, AUTHORIZE, SET_TOKEN, SET_LIST, SET_VISITED_USER} from '../Types/actionType'
+import Action, {STATUS_CHECK, AUTHORIZE, SET_TOKEN, SET_LIST, SET_VISITED_USER, DELETE_TOKEN, LOGOUT} from '../Types/actionType'
+import { UpdatePasswordType, UpdateUserType } from "../Types/UpdateType";
+import { AppDispatch } from "./typedDispatch";
+import { ThunkDispatch } from "redux-thunk";
 
 export const fetchStatus = () =>{
   return async (dispatch: Dispatch<Action>) => {
@@ -49,5 +52,21 @@ export const visitedUser = (id:number) => {
   return async (dispatch:Dispatch<Action>)=>{
     const res = await getUserByID(id);
     dispatch({type: SET_VISITED_USER, payload: res});
+  }
+}
+
+export const updateUserThunk = (update:UpdateUserType, id:number) => {
+  return async (dispatch: ThunkDispatch<AppDispatch, null, Action>) => {
+    const res = await updateUser(update, id);
+    dispatch(continueSesion());
+  }
+}
+
+export const deleteUsesrThunk = (id:number) => {
+  return async (dispatch: Dispatch<Action>) => {
+    const res = await deleteUser(id);
+    localStorage.removeItem('access_token');
+        dispatch({type:LOGOUT});
+        dispatch({type:DELETE_TOKEN});
   }
 }

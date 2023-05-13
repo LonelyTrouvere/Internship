@@ -26,7 +26,7 @@ type SetTokenAction = {
 
 type DeleteTokenAction = {
     type: typeof DELETE_TOKEN,
-    payload: null,
+    payload?: null,
 }
 
 type UserAction = AuthorizeAction | LogOutAction | SetTokenAction | DeleteTokenAction;

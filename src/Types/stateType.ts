@@ -7,6 +7,7 @@ export type User = {
     user_status?:string,  
     user_phone?: string,
     user_city?: string,
+    user_links?: Array<string>,
 }
 
 export type AccessToken = {

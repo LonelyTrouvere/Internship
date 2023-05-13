@@ -1,5 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from 'axios'
 import UserType from '../Types/FormData'
+import { UpdatePasswordType, UpdateUserType } from '../Types/UpdateType';
 
 const client = axios.create({
     baseURL: 'http://3.75.186.163/',
@@ -55,5 +56,20 @@ export const getAllUsers = async (page:number, entrie: number) => {
 
 export const getUserByID = async (id:number) => {
     const res = await client.get(`/user/${id}`).then(response => response.data.result);
+    return res;
+}
+
+export const updateUser = async (update:UpdateUserType, id:number) => {
+    const res = await client.put(`/user/${id}/update_info`, update);
+    return res;
+}
+
+export const updatePassword = async (update:UpdatePasswordType, id:number) => {
+    const res = await client.put(`/user/${id}/update_password`, update);
+    return res;
+}
+
+export const deleteUser = async (id:number) => {
+    const res = await client.delete(`/user/${id}`);
     return res;
 }

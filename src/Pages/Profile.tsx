@@ -3,6 +3,7 @@ import { RootState } from "../Store/store";
 import { useEffect, useState } from "react";
 import defaultAvatar from '../defaultavatar.jpg'
 import { ModalWindow } from "../Components/ModalWindow";
+import UserSettings from "../Components/UserSettings";
 import '../Styles/Profile.css'
 import { User } from "../Types/stateType";
 
@@ -36,7 +37,7 @@ const Profile = (props: {
             }
         </div>
             <ModalWindow modal={modal} setModal={setModal}>
-                
+                <UserSettings/>
             </ModalWindow>
         </>
     );
