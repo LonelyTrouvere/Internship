@@ -1,14 +1,18 @@
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import '../Styles/Navbar.css'
 import { useSelector } from 'react-redux';
 import { RootState } from '../Store/store';
 import { useDispatch } from '../Store/typedDispatch';
 import { DELETE_TOKEN, LOGOUT } from '../Types/actionType';
+import { User } from '../Types/stateType';
+import { visitedUser } from '../Store/asyncMetods';
 
 const Navbar = () =>
 {
     const dispatch = useDispatch();
+    const redirect = useNavigate();
     const token = useSelector((state:RootState) => state.token.access_token);
+    const visited = useSelector((state: RootState) => state.user['user_id']);
     const userName = useSelector((state:RootState) => state.user['user_firstname']+' '+state.user['user_lastname']);
     const email = useSelector((state:RootState) => state.user['user_email']);
     const handleLogout = () =>{
@@ -17,11 +21,16 @@ const Navbar = () =>
         dispatch({type:DELETE_TOKEN});
     }
 
+    const profileRedirect = async ()=> {
+        await dispatch(visitedUser(visited));
+        redirect(`/user/${visited}`);
+    }
+
     return (
     <nav>
         <div>
         <Link to=""><button className='home buttons'>Home</button></Link>
-        {token && <Link to="/profile"><button className='profile buttons'>Profile</button></Link>}
+        {token && <button onClick={profileRedirect} className='profile buttons'>Profile</button>}
         {token && <Link to="/list"><button className='list buttons'>List</button></Link>}
         <Link to="/about"><button className='about buttons'>About</button></Link>
         </div>

@@ -6,7 +6,7 @@ import { allUsers, visitedUser } from '../Store/asyncMetods';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Store/store';
 import { User } from '../Types/stateType';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Paganation = (props:
     {view: string}
@@ -32,13 +32,8 @@ const Paganation = (props:
     const registered = useSelector((state:RootState) => state.user['user_id']);
 
     const usersProfile = async (id:number) =>{
-      if (id === registered)
-      redirect('/profile');
-      else
-      {
       await dispatch(visitedUser(id));
-      redirect('/user');
-      }
+      redirect(`/user/${id}`);
     }
 
     return(

@@ -32,8 +32,7 @@ function App() {
         <Route path='/' element={<Main/>}></Route>
         <Route element={<PrivateRoute token={token!==null}/>}>
           <Route path='/list' element={<List/>}/>
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/user' element={<Profile user_id={id}/>}/>
+          <Route path={`/user/:id`} element={<Profile user_id={id}/>}/>
         </Route>
         <Route path='/about' element={<About/>}></Route>
         <Route element={<PrivateRoute token={token===null}/>}>
