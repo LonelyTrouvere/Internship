@@ -16,6 +16,7 @@ const Profile = (props: {
 
     const user = useSelector((state: RootState) => !props.user_id ?state.user:state.list.user_visit) as User;
     const avatar = user.user_avatar === null? defaultAvatar : user.user_avatar;
+    useEffect(()=>console.log(user), []);
 
     return (
         <>

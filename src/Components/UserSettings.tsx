@@ -5,7 +5,7 @@ import { User } from "../Types/stateType";
 import Input from "./Input";
 import { useSelector } from "react-redux";
 import { updatePassword as updPas} from "../Api/apiDialog";
-import { deleteUsesrThunk, updateUserThunk } from "../Store/asyncMetods";
+import { deleteUsesrThunk, updateUserThunk, updateAvatarThunk } from "../Store/asyncMetods";
 import { UpdatePasswordType, UpdateUserType } from "../Types/UpdateType";
 import { useDispatch } from "../Store/typedDispatch";
 import { isAxiosError } from "axios";
@@ -24,6 +24,8 @@ const UserSettings = () => {
         user_status: user.user_status,
         user_links: user.user_links,
     } 
+
+    const [updAvatar, setAvatar] = useState<FormData|null>(null);
     
     const [updatedUser, setUpdate] = useState<UpdateUserType>(example);
 
@@ -52,6 +54,14 @@ const UserSettings = () => {
         });
     }
 
+    const handleAvatar = (e:React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files as FileList;
+        const file = files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        setAvatar(formData);
+    }
+
     const deleteUser = async () => {
         await dispatch(deleteUsesrThunk(user.user_id));
     }
@@ -67,7 +77,7 @@ const UserSettings = () => {
                 setErrorMessage("First and last name can't be empty");
                 return false;
             }
-        if (JSON.stringify(updatedUser)===JSON.stringify(example) && updatePassword.user_password==="")
+        if (JSON.stringify(updatedUser)===JSON.stringify(example) && updatePassword.user_password==="" && updAvatar === null)
             {
                 setErrorMessage("No changes were applied");
                 return false;
@@ -84,6 +94,8 @@ const UserSettings = () => {
                 await updPas(updatePassword, user.user_id);
             if (JSON.stringify(updatedUser)!==JSON.stringify(example))
                  await dispatch(updateUserThunk(updatedUser, user.user_id));
+            if (updAvatar !== null)
+                await dispatch(updateAvatarThunk(updAvatar, user.user_id));
             }
             catch(error:unknown)
             {
@@ -101,7 +113,7 @@ const UserSettings = () => {
     <Input lab="Phone" type="input" inputName="user_phone" handleChange={handleUser} value={updatedUser.user_phone}/>
     <div className="inp">
             <label htmlFor="user_avatar">Avatar</label>
-            <input type="file" name="user_avatar" accept="image/*" onChange={handleUser}/>
+            <input type="file" name="user_avatar" accept="image/*" onChange={handleAvatar}/>
         </div>
     <button>Apply</button>
     </form>

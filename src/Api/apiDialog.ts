@@ -4,7 +4,7 @@ import { UpdatePasswordType, UpdateUserType } from '../Types/UpdateType';
 
 const client = axios.create({
     baseURL: 'http://3.75.186.163/',
-    timeout: 2000,
+    timeout: 6000,
     headers: {
         'Accept': 'application/json'
     }
@@ -71,5 +71,14 @@ export const updatePassword = async (update:UpdatePasswordType, id:number) => {
 
 export const deleteUser = async (id:number) => {
     const res = await client.delete(`/user/${id}`);
+    return res;
+}
+
+export const updateAvatar = async (file:FormData, id:number) => {
+    const res = await client.put(`/user/${id}/update_avatar`,file, {
+        headers: {
+          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryxvuLhLBjRiEASIF7'
+        }
+      });
     return res;
 }

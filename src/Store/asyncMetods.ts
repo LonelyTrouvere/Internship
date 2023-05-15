@@ -1,8 +1,15 @@
 import { Dispatch } from "redux";
-import { apiStatus, authUser, authMe, getAllUsers, getUserByID, updateUser, updatePassword, deleteUser } from "../Api/apiDialog";
+import { apiStatus,
+   authUser,
+   authMe,
+   getAllUsers,
+   getUserByID,
+  updateUser, 
+  deleteUser, 
+  updateAvatar } from "../Api/apiDialog";
 import FormUser from '../Types/FormData'
 import Action, {STATUS_CHECK, AUTHORIZE, SET_TOKEN, SET_LIST, SET_VISITED_USER, DELETE_TOKEN, LOGOUT} from '../Types/actionType'
-import { UpdatePasswordType, UpdateUserType } from "../Types/UpdateType";
+import { UpdateUserType } from "../Types/UpdateType";
 import { AppDispatch } from "./typedDispatch";
 import { ThunkDispatch } from "redux-thunk";
 
@@ -69,4 +76,11 @@ export const deleteUsesrThunk = (id:number) => {
         dispatch({type:LOGOUT});
         dispatch({type:DELETE_TOKEN});
   }
+}
+
+export const updateAvatarThunk = (file:FormData, id:number) => {
+    return async (dispatch: ThunkDispatch<AppDispatch, null, Action>) => {
+      const res = await updateAvatar(file, id);
+      dispatch(continueSesion());
+    }
 }
