@@ -17,11 +17,14 @@ function App() {
 
   const token_start = localStorage.getItem('access_token');
   const dispatch = useDispatch();
-  if (token_start){
+  if (!!token_start){
     dispatch(continueSesion());
   }
 
   const token = useSelector((state:RootState) => state.token.access_token);
+  const id = useSelector(
+    (state:RootState) => state.list.user_visit ? state.list.user_visit.user_id : null);
+
   return (
     <>
     <Navbar />
@@ -29,7 +32,7 @@ function App() {
         <Route path='/' element={<Main/>}></Route>
         <Route element={<PrivateRoute token={token!==null}/>}>
           <Route path='/list' element={<List/>}/>
-          <Route path='/profile' element={<Profile/>}/>
+          <Route path={`/user/:id`} element={<Profile user_id={id}/>}/>
         </Route>
         <Route path='/about' element={<About/>}></Route>
         <Route element={<PrivateRoute token={token===null}/>}>
