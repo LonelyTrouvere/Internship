@@ -16,7 +16,7 @@ const Profile = (props: {
 
     const regUser = useSelector((state:RootState)=> state.user as User);
     const user = useSelector((state: RootState) => regUser.user_id===props.user_id? state.user as User :state.list.user_visit as User);
-    const avatar = user.user_avatar === null? defaultAvatar : user.user_avatar;
+    const avatar = user.user_avatar? defaultAvatar : user.user_avatar;
 
     return (
         <>

@@ -2,6 +2,7 @@ import Main from './Pages/MainPage'
 import Form from './Pages/Form'
 import List from './Pages/List'
 import Profile from './Pages/Profile'
+import Company from './Pages/Company'
 import About from './Pages/About'
 import LoginRedirect from './Pages/LognRedirect'
 import Navbar from './Components/Navbar'
@@ -33,6 +34,7 @@ function App() {
         <Route element={<PrivateRoute token={token!==null}/>}>
           <Route path='/list' element={<List/>}/>
           <Route path={`/user/:id`} element={<Profile user_id={id}/>}/>
+          <Route path='/company' element={<Company/>}/>
         </Route>
         <Route path='/about' element={<About/>}></Route>
         <Route element={<PrivateRoute token={token===null}/>}>

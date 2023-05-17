@@ -10,6 +10,18 @@ export type User = {
     user_links?: Array<string>,
 }
 
+export type Company = {
+    company_id: number,
+    company_name: string,
+    company_title?:string,
+    company_avatar?:string,
+    is_visible:boolean,
+    company_description?: string,
+    company_city?:string,
+    company_phone?: string,
+    company_owner?: User,
+}
+
 export type AccessToken = {
     access_token: string | null,
 }
@@ -17,6 +29,12 @@ export type AccessToken = {
 export type OtherUsers = {
     users: Array<User>,
     user_visit: User | null,
+    total_page:number,
+}
+
+export type OtherCompanies = {
+    companies: Array<Company>,
+    company_visit: Company|null,
     total_page:number,
 }
 
