@@ -1,0 +1,11 @@
+.company-card{
+        border: 3px rgb(56, 59, 81) solid;
+        width:90%;
+        margin-bottom: 5px;
+        padding-top: 5px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        display: flex;
+        flex-direction: row;
+        gap:10px;
+}

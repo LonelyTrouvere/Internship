@@ -1,4 +1,4 @@
-import Action, { SET_COMPANY_LIST, SET_USER_COMPANIES } from "../Types/actionType"
+import Action, { SET_COMPANY_LIST, SET_USER_COMPANIES, SET_VISITED_COMPANY } from "../Types/actionType"
 import { OtherCompanies, Company } from "../Types/stateType"
 
 const companies:Array<Company> = [];
@@ -22,6 +22,8 @@ export const visitedCompanyReducer = (state:OtherCompanies = companyList, action
     switch (action.type){
         case SET_COMPANY_LIST:
             return {...state, companies: action.payload.companies, total_page: action.payload.total_page};
+        case SET_VISITED_COMPANY:
+            return {...state, company_visit: action.payload};
         default:
             return state;
     }

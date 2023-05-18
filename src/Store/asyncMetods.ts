@@ -9,7 +9,8 @@ import { apiStatus,
   updateAvatar, 
   getAllCompanies,
   getUserCompanies,
-  createCompany} from "../Api/apiDialog";
+  createCompany,
+  getCompanyByID} from "../Api/apiDialog";
 import FormUser from '../Types/FormData'
 import Action, {
   STATUS_CHECK,
@@ -20,7 +21,8 @@ import Action, {
        DELETE_TOKEN, 
        LOGOUT, 
        SET_COMPANY_LIST, 
-       SET_USER_COMPANIES} from '../Types/actionType'
+       SET_USER_COMPANIES,
+       SET_VISITED_COMPANY} from '../Types/actionType'
 import { RootState } from "./store";
 import { UpdateUserType } from "../Types/UpdateType";
 import { AppDispatch } from "./typedDispatch";
@@ -80,6 +82,13 @@ export const visitedUser = (id:number) => {
   return async (dispatch:Dispatch<Action>)=>{
     const res = await getUserByID(id);
     dispatch({type: SET_VISITED_USER, payload: res});
+  }
+}
+
+export const visitedCompany = (id:number) => {
+  return async (dispatch: Dispatch<Action>) => {
+    const res = await getCompanyByID(id);
+    dispatch({type: SET_VISITED_COMPANY, payload: res});
   }
 }
 

@@ -13,6 +13,7 @@ import PrivateRoute from './Components/PrivateRoute'
 import {RootState} from './Store/store'
 import './App.css'
 import { useSelector } from 'react-redux'
+import CompanyProfile from './Pages/CompanyProfile'
 
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
   const token = useSelector((state:RootState) => state.token.access_token);
   const id = useSelector(
     (state:RootState) => state.list.user_visit ? state.list.user_visit.user_id : null);
+  const company_id = useSelector(
+    (state:RootState) => state.companyList.company_visit ? state.companyList.company_visit.company_id : null);
 
   return (
     <>
@@ -35,6 +38,7 @@ function App() {
           <Route path='/list' element={<List/>}/>
           <Route path={`/user/:id`} element={<Profile user_id={id}/>}/>
           <Route path='/company' element={<Company/>}/>
+          <Route path={`/company/:id`} element={<CompanyProfile id={company_id}/>}/>
         </Route>
         <Route path='/about' element={<About/>}></Route>
         <Route element={<PrivateRoute token={token===null}/>}>

@@ -16,7 +16,7 @@ const Paganation = (props:
 ) =>{
 
   const [pageNumber, setPageNumber] = useState(1);
-    const [entrie, setEntries] = useState(10);
+  const [entrie, setEntries] = useState(10);
 
     const onNext = () => {if (pageNumber < total_page) setPageNumber(pageNumber+1);}
     const onPrevious = () => {if (pageNumber > 1) setPageNumber(pageNumber-1);}
@@ -29,9 +29,13 @@ const Paganation = (props:
 
     const dispatch = useDispatch();
     useEffect(()=>{
-      setPageNumber(1);
+      dispatch(props.getList(1, entrie));
     }, [props.view]);
-    useEffect(()=>{dispatch(props.getList(pageNumber, entrie));}, [pageNumber, entrie]);
+
+    useEffect(()=>{
+        dispatch(props.getList(pageNumber, entrie));
+    }, 
+    [pageNumber, entrie]);
    
     const list = useSelector((state:RootState) => props.view === 'User'? state.list.users:state.companyList.companies);
     const total_page = useSelector((state:RootState) => props.view === 'User'? state.list.total_page : state.companyList.total_page);

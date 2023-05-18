@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import '../Styles/Company.css'
 import Input from "../Components/Input";
 import ErrorBox from "../Components/ErrorBox";
 import CompanyCard from'../Components/CompanyCard'
@@ -7,10 +8,10 @@ import { useDispatch } from "../Store/typedDispatch";
 import { createCompanyThunk as createCompany, getUserCompaniesThunk as getUserCompanies} from "../Store/asyncMetods";
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
-import { Company as CompanyType } from "../Types/stateType";
+import { Company } from "../Types/stateType";
 
 
-const Company = () => {
+const CompanyPage = () => {
     useEffect(
         () => {
             dispatch(getUserCompanies(user_id));
@@ -28,8 +29,7 @@ const Company = () => {
     const dispatch = useDispatch();
     const user_id = useSelector((state:RootState) => state.user['user_id']);
 
-    const companies:Array<CompanyType> = useSelector((state:RootState) => state.userCompanies)
-    console.log(companies);
+    const companies:Array<Company> = useSelector((state:RootState) => state.userCompanies)
 
     const handleName = (e:React.ChangeEvent<HTMLInputElement>) => {
         setError("");
@@ -50,14 +50,21 @@ const Company = () => {
 
     return (
         <>
-        <button onClick={()=>setModal(true)}>Create</button>
-        <div className="owner-companies companies-holder">
-            {
-                companies.map( 
-                    (item) => 
-                    <CompanyCard company={item}/>
-                    )
-            }
+        <div className="dropdown">
+            <button className="owner-dd">
+                <div>
+                <span>Owner</span>
+                <button onClick={()=>setModal(true)}>Create</button>
+                </div>
+                </button>
+            <div className="owner-companies companies-holder">
+              {
+                   companies.map( 
+                      (item) => 
+                        <CompanyCard company={item}/>
+                      )
+              }
+            </div>
         </div>
         <ModalWindow modal={modal} setModal={setModal}>
             <form className="create-company" onSubmit={handleCreate}>
@@ -71,4 +78,4 @@ const Company = () => {
     );
 }
 
-export default Company;
+export default CompanyPage;

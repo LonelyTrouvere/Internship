@@ -64,6 +64,11 @@ export const getUserByID = async (id:number) => {
     return res;
 }
 
+export const getCompanyByID = async (id:number) => {
+    const res = await client.get(`/company/${id}`).then(response => response.data.result);
+    return res;
+}
+
 export const updateUser = async (update:UpdateUserType, id:number) => {
     const res = await client.put(`/user/${id}/update_info`, update);
     return res;
@@ -94,6 +99,6 @@ export const createCompany = async (company:{company_name:string, is_visible:boo
 }
 
 export const getUserCompanies = async (id:number) => {
-    const res = await client.get(`/user/${id}/companies_list`).then(response => response.data.result);
+    const res = await client.get(`/user/${id}/companies_list`).then(response => response.data.result.companies);
     return res;
 }
