@@ -14,6 +14,7 @@ import {RootState} from './Store/store'
 import './App.css'
 import { useSelector } from 'react-redux'
 import CompanyProfile from './Pages/CompanyProfile'
+import { getUserCompaniesThunk as getUserCompanies} from "./Store/asyncMetods";
 
 function App() {
 
@@ -29,6 +30,10 @@ function App() {
   const company_id = useSelector(
     (state:RootState) => state.companyList.company_visit ? state.companyList.company_visit.company_id : null);
 
+    const user_id = useSelector((state:RootState) => state.user['user_id']);
+    if (!!user_id){
+      dispatch(getUserCompanies(user_id));
+    }
   return (
     <>
     <Navbar />

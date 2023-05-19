@@ -20,6 +20,7 @@ export type Company = {
     company_city?:string,
     company_phone?: string,
     company_owner?: User,
+    company_links?: Array<string>
 }
 
 export type AccessToken = {

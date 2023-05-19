@@ -1,6 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from 'axios'
 import UserType from '../Types/FormData'
-import { UpdatePasswordType, UpdateUserType } from '../Types/UpdateType';
+import { UpdatePasswordType, UpdateUserType, UpdateCompanyType } from '../Types/UpdateType';
 
 const client = axios.create({
     baseURL: 'http://3.75.186.163/',
@@ -74,6 +74,16 @@ export const updateUser = async (update:UpdateUserType, id:number) => {
     return res;
 }
 
+export const updateCompany = async (upd: UpdateCompanyType, id: number) => {
+    const res = await client.put(`/company/${id}/update_info`, upd);
+    return res;
+}
+
+export const updateVisibility = async (upd: boolean, id: number) => {
+    const res = await client.put(`/company/${id}/update_visible`, {is_visible: upd});
+    return res;
+}
+
 export const updatePassword = async (update:UpdatePasswordType, id:number) => {
     const res = await client.put(`/user/${id}/update_password`, update);
     return res;
@@ -81,6 +91,20 @@ export const updatePassword = async (update:UpdatePasswordType, id:number) => {
 
 export const deleteUser = async (id:number) => {
     const res = await client.delete(`/user/${id}`);
+    return res;
+}
+
+export const deleteCompany = async (id:number) => {
+    const res = await client.delete(`/company/${id}`);
+    return res;
+}
+
+export const updateCompanyAvatar = async (file:FormData, id:number) => {
+    const res = await client.put(`/company/${id}/update_avatar`,file, {
+        headers: {
+          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryxvuLhLBjRiEASIF7'
+        }
+      });
     return res;
 }
 

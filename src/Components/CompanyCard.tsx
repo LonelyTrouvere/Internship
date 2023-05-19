@@ -20,7 +20,7 @@ const CompanyCard = (props:{
     return (
         <div className="company-card">
             <div className="company-card-image-holder">
-                <img src={props.company.company_avatar? props.company.company_avatar : companyAvatar} alt="company avatar"/>
+                <img src={props.company.company_avatar? props.company.company_avatar : companyAvatar} height="180px" width="auto" alt="company avatar"/>
             </div>
             <div className="company-card-info">
                 <div className="company-card-name">

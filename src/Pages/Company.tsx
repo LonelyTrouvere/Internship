@@ -5,19 +5,13 @@ import ErrorBox from "../Components/ErrorBox";
 import CompanyCard from'../Components/CompanyCard'
 import { ModalWindow } from "../Components/ModalWindow";
 import { useDispatch } from "../Store/typedDispatch";
-import { createCompanyThunk as createCompany, getUserCompaniesThunk as getUserCompanies} from "../Store/asyncMetods";
+import { createCompanyThunk as createCompany} from "../Store/asyncMetods";
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
 import { Company } from "../Types/stateType";
 
 
 const CompanyPage = () => {
-    useEffect(
-        () => {
-            dispatch(getUserCompanies(user_id));
-        },
-        []
-    );
     
     const [modal, setModal] = useState<boolean>(false);
     const [error, setError] = useState<string>("");

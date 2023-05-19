@@ -10,7 +10,10 @@ import { apiStatus,
   getAllCompanies,
   getUserCompanies,
   createCompany,
-  getCompanyByID} from "../Api/apiDialog";
+  getCompanyByID,
+  updateCompany,
+  updateCompanyAvatar,
+  deleteCompany} from "../Api/apiDialog";
 import FormUser from '../Types/FormData'
 import Action, {
   STATUS_CHECK,
@@ -24,7 +27,7 @@ import Action, {
        SET_USER_COMPANIES,
        SET_VISITED_COMPANY} from '../Types/actionType'
 import { RootState } from "./store";
-import { UpdateUserType } from "../Types/UpdateType";
+import { UpdateCompanyType, UpdateUserType } from "../Types/UpdateType";
 import { AppDispatch } from "./typedDispatch";
 import { ThunkDispatch } from "redux-thunk";
 import { useSelector } from "react-redux";
@@ -99,6 +102,13 @@ export const updateUserThunk = (update:UpdateUserType, id:number) => {
   }
 }
 
+export const updateCompanyThunk = (update: UpdateCompanyType, id:number) => {
+  return async (dispatch: ThunkDispatch<AppDispatch, null, Action>) => {
+    const res = await updateCompany(update, id);
+    dispatch(visitedCompany(id));
+  }
+}
+
 export const deleteUsesrThunk = (id:number) => {
   return async (dispatch: Dispatch<Action>) => {
     const res = await deleteUser(id);
@@ -115,6 +125,13 @@ export const updateAvatarThunk = (file:FormData, id:number) => {
     }
 }
 
+export const updateCompanyAvatarThunk = (file:FormData, id:number) => {
+  return async (dispatch: ThunkDispatch<AppDispatch, null, Action>) => {
+    const res = await updateCompanyAvatar(file, id);
+    dispatch(visitedCompany(id));
+  }
+}
+
 export const getUserCompaniesThunk = (id:number) => {
     return async (dispatch: Dispatch<Action>) => {
       const res = await getUserCompanies(id);
@@ -126,5 +143,12 @@ export const createCompanyThunk = (company:{company_name: string, is_visible: bo
   return async (dispatch: ThunkDispatch<AppDispatch, null, Action>) => {
     const res = await createCompany(company);
     dispatch(getUserCompaniesThunk(id));
+  }
+}
+
+export const deleteCompanyThunk = (id:number, user_id:number) => {
+  return async (dispatch: ThunkDispatch<AppDispatch, null, Action>) => {
+    const res = await deleteCompany(id);
+    dispatch(getUserCompaniesThunk(user_id));
   }
 }

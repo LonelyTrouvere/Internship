@@ -2,14 +2,26 @@ import defaultAvatar from '../defaultcompanylogo.png'
 import '../Styles/CompanyProfile.css'
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
+import { useCompaniesId } from '../Util/userCompaniesID';
+import { User } from '../Types/stateType';
+import { ModalWindow } from '../Components/ModalWindow';
+import { useState } from 'react';
+import CompanySettings from '../Components/CompanySettings';
 
 
 const CompanyProfile = (props:{id:number | null}) => {
     
+    const [modal, setModal] = useState(false);
     const company = useSelector((state:RootState) => state.companyList.company_visit);
+    const regUser = useSelector((state:RootState) => state.user as User);
+    const userCompanies = useCompaniesId();
+
+    let is_users = company?.company_owner?.user_id === regUser.user_id && userCompanies.includes(company.company_id);
     const avatar = company?.company_avatar ? company.company_avatar : defaultAvatar; 
+
     return (
-        <div className="company-profile">
+        <div className='company-profile'>
+        <div className="wraper">
             <div className="company-profile-avatar-holder">
                 <img src={avatar} alt="company avatar" height='180px' width='auto'/> 
             </div>
@@ -43,6 +55,11 @@ const CompanyProfile = (props:{id:number | null}) => {
                     <p>{company?.company_description}</p>
                 </div>
             </div>
+        </div>
+        {is_users && <button className='company-settings' onClick={() => setModal(true)}>Settings</button>}
+        <ModalWindow modal={modal} setModal={setModal}>
+            <CompanySettings/>
+        </ModalWindow>
         </div>
     );
 

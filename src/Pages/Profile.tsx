@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import defaultAvatar from '../defaultavatar.jpg'
 import { ModalWindow } from "../Components/ModalWindow";
 import UserSettings from "../Components/UserSettings";
@@ -16,7 +16,7 @@ const Profile = (props: {
 
     const regUser = useSelector((state:RootState)=> state.user as User);
     const user = useSelector((state: RootState) => regUser.user_id===props.user_id? state.user as User :state.list.user_visit as User);
-    const avatar = user.user_avatar? defaultAvatar : user.user_avatar;
+    const avatar = user.user_avatar?  user.user_avatar:defaultAvatar;
 
     return (
         <>
