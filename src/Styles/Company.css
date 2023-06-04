@@ -1,0 +1,31 @@
+.companies-holder{
+    margin-top: 5px;
+    width: 100%;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.dropdown{
+    width: 95%;
+    margin-left: 20px;
+}
+
+.owner-dd{
+    width: 92vw;
+    background: none;
+    border: 3px rgb(56, 59, 81) solid;
+}
+
+.owner-dd div{
+    display: flex;
+}
+
+.owner-dd button{
+   margin-left: 37vw;
+}
+
+.dropdown span {
+    padding-right: 50vw;
+    width:50%;
+}

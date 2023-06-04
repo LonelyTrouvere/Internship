@@ -4,13 +4,13 @@ import { RootState } from '../Store/store';
 
 
 const ListButtons = (props:{
+    total_page: number,
     setPageNumber:React.Dispatch<React.SetStateAction<number>>
 }) =>{
 
-    const total_page = useSelector((state:RootState)=> state.list.total_page);
     const buttonNumber:Array<number> = [];
 
-    for (let i=1; i<=total_page; i++)
+    for (let i=1; i<=props.total_page; i++)
     {
         buttonNumber.push(i);
     }

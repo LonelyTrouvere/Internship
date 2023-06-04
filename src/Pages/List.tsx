@@ -1,9 +1,10 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
+import { allUsers, allCompanies } from '../Store/asyncMetods';
 import Paganation from '../Components/Paganation'
 
 const List = () => {
     const [selected, setSelected] = useState('User');
-
+    const handler = selected === 'User'? allUsers : allCompanies;
     return(
         <>
         <form className="controlPanel">
@@ -12,7 +13,7 @@ const List = () => {
                 <option id='2'>Company</option>
             </select>
         </form>
-        <Paganation view={selected}/>
+        <Paganation view={selected} getList={handler}/>
         </>
     );
 }

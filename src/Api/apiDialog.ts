@@ -1,6 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from 'axios'
 import UserType from '../Types/FormData'
-import { UpdatePasswordType, UpdateUserType } from '../Types/UpdateType';
+import { UpdatePasswordType, UpdateUserType, UpdateCompanyType } from '../Types/UpdateType';
 
 const client = axios.create({
     baseURL: 'http://3.75.186.163/',
@@ -54,13 +54,33 @@ export const getAllUsers = async (page:number, entrie: number) => {
     return res;
 }
 
+export const getAllCompanies = async (page:number, entrie: number) => {
+    const res = await client.get("companies", {params:{page:page, page_size:entrie}}).then(response => response.data.result);
+    return res;
+}
+
 export const getUserByID = async (id:number) => {
     const res = await client.get(`/user/${id}`).then(response => response.data.result);
     return res;
 }
 
+export const getCompanyByID = async (id:number) => {
+    const res = await client.get(`/company/${id}`).then(response => response.data.result);
+    return res;
+}
+
 export const updateUser = async (update:UpdateUserType, id:number) => {
     const res = await client.put(`/user/${id}/update_info`, update);
+    return res;
+}
+
+export const updateCompany = async (upd: UpdateCompanyType, id: number) => {
+    const res = await client.put(`/company/${id}/update_info`, upd);
+    return res;
+}
+
+export const updateVisibility = async (upd: boolean, id: number) => {
+    const res = await client.put(`/company/${id}/update_visible`, {is_visible: upd});
     return res;
 }
 
@@ -74,11 +94,35 @@ export const deleteUser = async (id:number) => {
     return res;
 }
 
+export const deleteCompany = async (id:number) => {
+    const res = await client.delete(`/company/${id}`);
+    return res;
+}
+
+export const updateCompanyAvatar = async (file:FormData, id:number) => {
+    const res = await client.put(`/company/${id}/update_avatar`,file, {
+        headers: {
+          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryxvuLhLBjRiEASIF7'
+        }
+      });
+    return res;
+}
+
 export const updateAvatar = async (file:FormData, id:number) => {
     const res = await client.put(`/user/${id}/update_avatar`,file, {
         headers: {
           'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryxvuLhLBjRiEASIF7'
         }
       });
+    return res;
+}
+
+export const createCompany = async (company:{company_name:string, is_visible:boolean}) => {
+    const res = await client.post("/company", company);
+    return res;
+}
+
+export const getUserCompanies = async (id:number) => {
+    const res = await client.get(`/user/${id}/companies_list`).then(response => response.data.result.companies);
     return res;
 }

@@ -31,6 +31,7 @@ const Navbar = () =>
         <div>
         <Link to=""><button className='home buttons'>Home</button></Link>
         {token && <button onClick={profileRedirect} className='profile buttons'>Profile</button>}
+        {token && <Link to="/company"><button className='company buttons'>Company</button></Link>}
         {token && <Link to="/list"><button className='list buttons'>List</button></Link>}
         <Link to="/about"><button className='about buttons'>About</button></Link>
         </div>
